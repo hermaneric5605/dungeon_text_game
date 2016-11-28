@@ -6,21 +6,22 @@ class Dungeon
 		@rooms = []
 	end
 
-class Player
-	attr_accessor :name, :location
-
-	def initialize(player_name)
-		@name = player_name
+	def add_room(reference, name, description, connections)
+		@rooms << Room.new(reference, name, description, connections)
 	end
-end
 
-class Room
-	attr_accessor :reference, :name, :description, :connections
-	def initialize(reference, name, description, connections)
-		@reference = reference
-		@name = name
-		@description = description
-		@connections = connections
+	def start(location)
+		@player.location = location
+		show_current_description
 	end
-  end
-end
+
+	def show_current_description
+		puts find_room_in_dungeon(@player.location).full_description
+	end
+
+	def find_room_in_dungeon(reference)
+		@rooms.detect { |room| room.reference == reference }
+		def find_room_in_direction(direction)
+			find_room_in_dungeon(@player.location)[direction]
+		end
+
